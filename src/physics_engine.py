@@ -10,7 +10,25 @@ class Physics_Engine :
         print()
 
     def calculate_craft_positions(self, craft, dt) :
-        print()
+        print('Calculating Position of', craft.name)
+
+        #calculate barycenter between body and parent
+        #barycenter = (body.mass*np.linalg.norm(body.position))/(body.mass + body.parent.mass)
+        #print('Barycenter:', barycenter)
+
+        #calculate gravitational force
+        r = np.linalg.norm(craft.position)
+        force = -G*(craft.mass * craft.governing_body.mass)/(r*r)
+        force_vector = force*(craft.position / np.linalg.norm(craft.position))
+        #print('force', force_vector)
+
+        #calculate changes in velocity
+        craft.velocity = np.array([craft.velocity[0] + (force_vector[0]*dt)/craft.mass, craft.velocity[1] + (force_vector[1]*dt)/craft.mass])
+        #print('velocity', body.velocity)
+
+        #update positions
+        craft.position = np.array([craft.position[0] + craft.velocity[0]*dt, craft.position[1] + craft.velocity[1]*dt])
+        #print('position', body.position)
 
     def calculate_celestrial_positions(self, body, dt) :
         print('Calculating Position of', body.name)

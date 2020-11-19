@@ -32,4 +32,10 @@ class Renderer :
 
         pygame.display.update()
 
-    
+    def render_craft(self, list_of_craft) :
+        if list_of_craft :
+            for craft in list_of_craft :
+                x_pixel = (craft.governing_body.position[0] + craft.position[0])*self.SCALE + self.FRAME_RESOLUTION[0]/2
+                y_pixel = (craft.governing_body.position[1] + craft.position[1])*self.SCALE + self.FRAME_RESOLUTION[1]/2
+                print('Rendering', craft.name, 'at\t\t', '{:>4}'.format(x_pixel), '{:>4}'.format(y_pixel))
+                pygame.draw.circle(self.screen, (0, 255, 0), (x_pixel, y_pixel), 1, 3)
